@@ -9,11 +9,26 @@ Matrix::Matrix(int _kRows, int _kCols) : kRows(_kRows), kCols(_kCols)
     }
 }
 
+Matrix::Matrix(const Matrix& m)
+{
+    kRows = m.kRows;
+    kCols = m.kCols;
+    values = new uchar*[kRows];
+    for (int i = 0; i < kRows; i++)
+    {
+        values[i] = new uchar[kCols];
+        for (int j = 0; j < kCols; j++)
+        {
+            values[i][j] = m[i][j];
+        }
+    }
+}
+
 void Matrix::Zeros()
 {
     for (int i = 0; i < kRows; i++)
     {
-        for (int j = 0; i < kCols; j++)
+        for (int j = 0; j < kCols; j++)
         {
             values[i][j] = 0;
         }

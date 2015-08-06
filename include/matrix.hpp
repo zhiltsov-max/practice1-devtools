@@ -17,6 +17,7 @@ public:
 public:
     Matrix() {};
     Matrix(int _kRows, int _kCols);
+    Matrix(const Matrix& m);
     void Zeros();
     void Ones();    
     void Random(int _seed = 10);
