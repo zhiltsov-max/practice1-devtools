@@ -52,6 +52,25 @@ Matrix::~Matrix()
     delete [] values;
 }
 
+bool Matrix::operator==(const Matrix& m) const
+{
+    if (kRows != m.kRows || kCols != m.kCols)
+    {
+        return false;
+    }
+    for (int i = 0; i < kRows; i++)
+    {
+        for (int j = 0; j < kCols; j++)
+        {
+            if (values[i][j] != m[i][j])
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 ostream& operator<<(ostream& os, const Matrix& m)
 {
     for (int i = 0; i < m.kRows; i++)

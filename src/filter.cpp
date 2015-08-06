@@ -1,6 +1,6 @@
 #include "filter.h"
 
-Matrix& filter2d(const Matrix &m, const Matrix &kernel)
+Matrix& filter2d(Matrix &m, const Matrix &kernel)
 {
     return m;
 }

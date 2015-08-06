@@ -12,6 +12,7 @@ class Matrix
 {
 private:
     uchar **values;
+public:
     int kRows, kCols;
 public:
     Matrix() {};
@@ -19,7 +20,8 @@ public:
     void Zeros();
     void Ones();    
     void Random(int _seed = 10);
-    uchar *operator[](int i) { return values[i]; }
+    uchar *operator[](int i) const { return values[i]; }
+    bool operator==(const Matrix& m) const;
     friend ostream& operator<<(ostream& os, const Matrix& m);
     ~Matrix();
 };
