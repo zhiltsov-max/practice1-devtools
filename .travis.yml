@@ -9,7 +9,7 @@ before_script:
   - mkdir ./build
   - cd ./build
 script:
-  - cmake -DWITH_CODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug ../practice1
+  - cmake -DWITH_CODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug ..
   - make -j
   - cd ./bin/
   - ./practice1_test
