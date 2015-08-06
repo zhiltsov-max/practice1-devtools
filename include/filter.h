@@ -2,4 +2,4 @@
 
 #include "matrix.hpp"
 
-Matrix& filter2d(Matrix &m, const Matrix &kernel);
+Matrix filter2d(const Matrix &m, const Matrix &kernel);
