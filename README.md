@@ -60,7 +60,7 @@
   $ git config --global user.name "github-account"
   ```
   
-  6. —оздать ветку filter-implementation и перейти в нее:
+  6. —оздать ветку ```filter-implementation``` и перейти в нее:
   
   ```
   $ git checkout -b filter-implementation
