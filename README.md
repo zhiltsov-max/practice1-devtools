@@ -38,7 +38,7 @@
 
 ## Инструкция по выполнению работы
 
-  1. Создать аккаунт на [github.com](https://github.com), если такой отсутствует. Для определенности обозначим аккаунт github-account.
+  1. Создать аккаунт на [github.com](https://github.com), если такой отсутствует. Для определенности обозначим аккаунт ```github-account```.
 
   2. Сделать fork репозитория ```https://github.com/Itseez-NNSU-SummerSchool2015/practice1-devtools``` (в терминологии Git upstream-репозиторий) к себе в организацию с названием github-account. В результате будет создана копию репозитория с названием ```https://github.com/github-account/practice1-devtools``` (origin-репозиторий).
 
