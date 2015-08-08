@@ -41,13 +41,21 @@
   1. Создать аккаунт на ```github.com```, если такой отсутствует. Для определенности обозначим аккаунт github-account.
   2. Сделать fork репозитория ```https://github.com/Itseez-NNSU-SummerSchool2015/practice1-devtools``` (в терминологии Git upstream-репозиторий) к себе в организацию с названием github-account. В результате будет создана копию репозитория с названием ```https://github.com/github-account/practice1-devtools``` (origin-репозиторий).
   3. Клонировать репозиторий ```https://github.com/github-account/practice1-devtools```, воспользовавшись следующей командой:
-  ```$ git clone https://github.com/github-account/practice1-devtools```
+  ```
+  $ git clone https://github.com/github-account/practice1-devtools
+  ```
   4. Настроить upstream-репозиторий:
-  ```$ git remote add upstream https://github.com/github-account/practice1-devtools```
+  ```
+  $ git remote add upstream https://github.com/github-account/practice1-devtools
+  ```
   5. Настроить имя пользователя, из под которого будут выполняться все операции с репозиторией Git:
-  ```$ git config --global user.name "github-account"```
+  ```
+  $ git config --global user.name "github-account"
+  ```
   6. Создать ветку filter-implementation и перейти в нее:
-  ```$ git checkout -b filter-implementation```
+  ```
+  $ git checkout -b filter-implementation
+  ```
   7. Проверить, что загруженная версия проекта собирается и успешно выполняются все тесты. Для этого необходимо выполнить следующую последовательность действий:
      1. Рядом с директорией practice1-devtools создайте practice1-devtools-bin. В новой директории будут размещены файлы решения и проектов, сгенерированные с помощью CMake.
 	 2. Перейдите в директорию practice1-devtools-bin
