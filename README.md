@@ -41,9 +41,11 @@
   1. —оздать аккаунт на ```github.com```, если такой отсутствует. ƒл€ определенности обозначим аккаунт github-account.
   2. —делать fork репозитори€ ```https://github.com/Itseez-NNSU-SummerSchool2015/practice1-devtools``` (в терминологии Git upstream-репозиторий) к себе в организацию с названием github-account. ¬ результате будет создана копию репозитори€ с названием ```https://github.com/github-account/practice1-devtools``` (origin-репозиторий).
   3.  лонировать репозиторий ```https://github.com/github-account/practice1-devtools```, воспользовавшись следующей командой:
+  
   ```
   $ git clone https://github.com/github-account/practice1-devtools
   ```
+  
   4. Ќастроить upstream-репозиторий:
   ```
   $ git remote add upstream https://github.com/github-account/practice1-devtools
