@@ -46,7 +46,7 @@ void Matrix::Ones()
 {
     for (int i = 0; i < kRows; i++)
     {
-        for (int j = 0; i < kCols; j++)
+        for (int j = 0; j < kCols; j++)
         {
             values[i][j] = 1;
         }
@@ -102,6 +102,8 @@ bool Matrix::operator==(const Matrix& m) const
 
 ostream& operator<<(ostream& os, const Matrix& m)
 {
+    os << endl;
+
     for (int i = 0; i < m.kRows; i++)
     {
         for (int j = 0; j < m.kCols; j++)

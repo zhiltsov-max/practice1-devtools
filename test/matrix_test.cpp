@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include "matrix.hpp"
 
-TEST(Matrix, matrix_set_zeros)
+TEST(Matrix, matrix_can_set_zeros)
 {
     Matrix m(2, 2);
 
@@ -11,6 +11,18 @@ TEST(Matrix, matrix_set_zeros)
     EXPECT_EQ(0, m[0][1]);
     EXPECT_EQ(0, m[1][0]);
     EXPECT_EQ(0, m[1][1]);
+}
+
+TEST(Matrix, matrix_can_set_ones)
+{
+    Matrix m(2, 2);
+
+    m.Ones();
+
+    EXPECT_EQ(1, m[0][0]);
+    EXPECT_EQ(1, m[0][1]);
+    EXPECT_EQ(1, m[1][0]);
+    EXPECT_EQ(1, m[1][1]);
 }
 
 TEST(Matrix, comparator_returns_true_on_equal_matrices)
