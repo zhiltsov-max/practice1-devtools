@@ -11,6 +11,3 @@ class Filters
 
 Filters* createFiltersOpenCV();
 Filters* createFiltersDummy();
-
-class FiltersOpenCV;
-class FiltersDummy;
