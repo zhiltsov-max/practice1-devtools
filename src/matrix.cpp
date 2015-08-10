@@ -1,7 +1,12 @@
 #include "matrix.hpp"
 
+#include <time.h>
+#include <stdlib.h>
+
+using namespace std;
+
 Matrix::Matrix(int _kRows, int _kCols) : kRows(_kRows), kCols(_kCols)
-{    
+{
     values = new uchar*[kRows];
     for (int i = 0; i < kRows; i++)
     {
@@ -13,7 +18,9 @@ Matrix::Matrix(const Matrix& m)
 {
     kRows = m.kRows;
     kCols = m.kCols;
+
     values = new uchar*[kRows];
+
     for (int i = 0; i < kRows; i++)
     {
         values[i] = new uchar[kCols];
@@ -46,25 +53,30 @@ void Matrix::Ones()
     }
 }
 
-void Matrix::Random(int _seed)
+void Matrix::Random(int seed)
 {
-    srand((unsigned int)time(0));
+    srand(seed);
+
     for (int i = 0; i < kRows; i++)
     {
         for (int j = 0; j < kCols; j++)
         {
-            values[i][j] = (uchar) (255 * rand());
+            values[i][j] = (uchar) (rand() % 256);
         }
     }
 }
 
 Matrix::~Matrix()
 {
-    for (int i = 0; i < kRows; i++)
+    if (values)
     {
-        delete [] values[i];
+        for (int i = 0; i < kRows; i++)
+        {
+            if (values[i])
+                delete [] values[i];
+        }
+        delete [] values;
     }
-    delete [] values;
 }
 
 bool Matrix::operator==(const Matrix& m) const
@@ -73,6 +85,7 @@ bool Matrix::operator==(const Matrix& m) const
     {
         return false;
     }
+
     for (int i = 0; i < kRows; i++)
     {
         for (int j = 0; j < kCols; j++)
@@ -83,6 +96,7 @@ bool Matrix::operator==(const Matrix& m) const
             }
         }
     }
+
     return true;
 }
 
@@ -96,5 +110,6 @@ ostream& operator<<(ostream& os, const Matrix& m)
         }
         os << endl;
     }
+
     return os;
 }
