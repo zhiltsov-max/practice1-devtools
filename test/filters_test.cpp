@@ -2,12 +2,12 @@
 
 #include <gtest/gtest.h>
 
-class FiltersTest : public ::testing::TestWithParam<const char*>
+class FiltersTest : public ::testing::TestWithParam<int>
 {
  public:
     virtual void SetUp()
     {
-        filters = createFilters(GetParam());
+        filters = createFilters(static_cast<FILTERS_IMPLEMENTATIONS>(GetParam()));
     }
     virtual void TearDown()
     {
@@ -43,4 +43,4 @@ TEST_P(FiltersTest, filter2d)
 
 INSTANTIATE_TEST_CASE_P(Instance,
                         FiltersTest,
-                        ::testing::ValuesIn(filters_implementations));
+                        ::testing::Range<int>((int)DUMMY, (int)NUM_IMPLS));

@@ -9,10 +9,12 @@ class Filters
     virtual void filter2d(const Matrix &src, Matrix& dst, const Matrix &kernel) = 0;
 };
 
-static const char* filters_implementations[] = {
-      "DUMMY"
-    , "OPENCV"
-    // , "YOUR_NAME"
+enum FILTERS_IMPLEMENTATIONS {
+    DUMMY,
+    OPENCV,
+    // Add your enum value here
+    // YOUR_NAME,
+    NUM_IMPLS
 };
 
-Filters* createFilters(std::string impl);
+Filters* createFilters(FILTERS_IMPLEMENTATIONS impl);
