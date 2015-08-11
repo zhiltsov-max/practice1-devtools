@@ -17,11 +17,11 @@ set(PRACTICE1_LIBRARY ${PROJECT_NAME})
 set(PRACTICE1_TESTS   "${PROJECT_NAME}_test")
 set(PRACTICE1_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
-find_package(OpenCV REQUIRED)
-set(LIBRARY_DEPS ${OpenCV_LIBS})
-
 include_directories("${PRACTICE1_INCLUDE}")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/3rdparty")
+
+find_package(OpenCV REQUIRED)
+set(LIBRARY_DEPS ${OpenCV_LIBS})
 
 # BUILD
 add_subdirectory(3rdparty)
