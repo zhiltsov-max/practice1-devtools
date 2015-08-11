@@ -10,7 +10,6 @@ class Filters
 };
 
 enum FILTERS_IMPLEMENTATIONS {
-    DUMMY,
     OPENCV,
     // Add your enum value here
     // YOUR_NAME,

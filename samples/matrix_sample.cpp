@@ -13,7 +13,7 @@ int main()
 
     cout << "---------------------------" << endl;
 
-    Filters* filters = createFilters(DUMMY);
+    Filters* filters = createFilters(OPENCV);
 
     Matrix mf(3, 4);
     filters->box(m, mf);

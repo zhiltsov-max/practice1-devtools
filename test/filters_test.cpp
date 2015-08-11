@@ -43,4 +43,4 @@ TEST_P(FiltersTest, filter2d)
 
 INSTANTIATE_TEST_CASE_P(Instance,
                         FiltersTest,
-                        ::testing::Range<int>((int)DUMMY, (int)NUM_IMPLS));
+                        ::testing::Range<int>((int)OPENCV, (int)NUM_IMPLS));
