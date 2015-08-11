@@ -4,12 +4,12 @@ compiler:
   - clang
 before_install: sudo apt-get update -qq
 install:
-  - sudo pip install cpp-coveralls
+  - sudo apt-get install -qq libopencv-dev
 before_script:
   - mkdir ./build
   - cd ./build
 script:
-  - cmake -DWITH_CODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug ..
+  - cmake -DCMAKE_BUILD_TYPE=Debug ..
   - make -j
   - cd ./bin/
   - ./practice1_test
