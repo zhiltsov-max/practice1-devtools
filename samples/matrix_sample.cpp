@@ -16,7 +16,8 @@ int main()
     Filters* filters = createFilters(OPENCV);
 
     Matrix mf(3, 4);
-    filters->box(m, mf);
+    m.Zeros();
+    filters->boxFilter(m, mf);
     cout << mf;
 
     cout << "---------------------------" << endl;

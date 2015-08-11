@@ -1,15 +1,56 @@
 #include "filters.hpp"
+#include <opencv2\core\core.hpp>
+#include <opencv2\imgproc\imgproc.hpp>
+
+using namespace cv;
 
 class FiltersOpenCV : public Filters
 {
  public:
-    virtual void box(const Matrix &src, Matrix& dst)
+    virtual void boxFilter(const Matrix &src, Matrix& dst, const int kSize = 3)
     {
-        dst.Zeros();
+        Mat srcMat, dstMat;
+        matrix2cvMat(src, srcMat);
+        cv::boxFilter(srcMat, dstMat, -1, Size(kSize, kSize));
+        cvMat2matrix(dstMat, dst);
     }
+
     virtual void filter2d(const Matrix &src, Matrix& dst, const Matrix &kernel)
     {
         dst.Zeros();
+    }
+
+private:
+    void matrix2cvMat(const Matrix &src, Mat &dst)
+    {
+        dst.create(src.rows(), src.cols(), CV_8UC1);
+        uchar *p;
+        for (int i = 0; i < src.rows(); i++)
+        {
+            p = dst.ptr<uchar>(i);
+            for (int j = 0; j < src.cols(); j++)
+            {
+                p[j] = src[i][j];
+            }
+        }
+    }
+
+    void cvMat2matrix(const Mat &src, Matrix &dst)
+    {
+        if (dst.data() == 0 || 
+            src.rows != dst.rows() || src.cols != dst.cols())
+        {
+            return;
+        }
+        const uchar *p;
+        for (int i = 0; i < src.rows; i++)
+        {
+            p = src.ptr<uchar>(i);
+            for (int j = 0; j < src.cols; j++)
+            {
+                dst[i][j] = p[j];
+            }
+        }
     }
 };
 

@@ -17,16 +17,15 @@ class FiltersTest : public ::testing::TestWithParam<int>
     Filters* filters;
 };
 
-TEST_P(FiltersTest, box)
+TEST_P(FiltersTest, box_filter_on_zero_mat)
 {
-    Matrix src(5, 5);
+    Matrix src(5, 5), dst(5, 5), dstExp(5, 5);
     src.Zeros();
+    dstExp.Zeros();
 
-    Matrix dst(5, 5);
+    filters->boxFilter(src, dst);
 
-    filters->box(src, dst);
-
-    EXPECT_EQ(src, dst);
+    EXPECT_EQ(dstExp, dst);
 }
 
 TEST_P(FiltersTest, filter2d)
