@@ -28,12 +28,12 @@ TEST_P(FiltersTest, box_filter_on_zero_mat)
     EXPECT_EQ(dstExp, dst);
 }
 
-TEST_P(FiltersTest, filter2d)
+TEST_P(FiltersTest, filter2d_on_zero_mat)
 {
-    Matrix src(5, 5);
+    Matrix src(5, 5), dst(5, 5), kernel(3, 3);
     src.Zeros();
-    Matrix dst(5, 5);
-    Matrix kernel(3, 3);
+    dst.Zeros();
+    kernel.Random();
 
     filters->filter2d(src, dst, kernel);
 

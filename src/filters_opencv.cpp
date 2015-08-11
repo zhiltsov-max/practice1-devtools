@@ -17,7 +17,11 @@ class FiltersOpenCV : public Filters
 
     virtual void filter2d(const Matrix &src, Matrix& dst, const Matrix &kernel)
     {
-        dst.Zeros();
+        Mat srcMat, dstMat, kernelMat;
+        matrix2cvMat(src, srcMat);
+        matrix2cvMat(kernel, kernelMat);
+        cv::filter2D(srcMat, dstMat, -1, kernelMat);
+        cvMat2matrix(dstMat, dst);
     }
 
 private:
