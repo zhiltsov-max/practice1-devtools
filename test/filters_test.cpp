@@ -2,11 +2,6 @@
 
 #include <gtest/gtest.h>
 
-const char* impls[] = {
-      "DUMMY"
-    , "OPENCV"
-};
-
 class FiltersTest : public ::testing::TestWithParam<const char*>
 {
  public:
@@ -48,4 +43,4 @@ TEST_P(FiltersTest, filter2d)
 
 INSTANTIATE_TEST_CASE_P(Instance,
                         FiltersTest,
-                        ::testing::ValuesIn(impls));
+                        ::testing::ValuesIn(filters_implementations));
