@@ -10,7 +10,6 @@ TARGET_LINK_LIBRARIES(${target} gtest ${PRACTICE1_LIBRARY})
 
 add_custom_command(
     TARGET ${PRACTICE1_TESTS}
-    POST_BUILD
-    COMMAND ln -fns "${CMAKE_SOURCE_DIR}/testdata" "${CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE}/testdata"
-    COMMENT "Adding a symbolic link to testdata"
+	POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_SOURCE_DIR}/testdata" "${CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE}/testdata"
 )
