@@ -13,7 +13,7 @@ int main()
 
     cout << "---------------------------" << endl;
 
-    Filters* filters = createFiltersDummy();
+    Filters* filters = createFilters("DUMMY");
 
     Matrix mf(3, 4);
     filters->box(m, mf);
