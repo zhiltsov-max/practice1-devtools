@@ -54,7 +54,15 @@ TEST_P(FiltersTest, box_filter_on_correct_mat)
 
     Mat srcMat, expDstMat;
     srcMat = imread(input, CV_LOAD_IMAGE_GRAYSCALE);
+    if (srcMat.empty())
+    {
+        FAIL() << "Can't read" + input + " image";
+    }
     expDstMat = imread(expOutput, CV_LOAD_IMAGE_GRAYSCALE);
+    if (expDstMat.empty())
+    {
+        FAIL() << "Can't read" + expOutput + " image";
+    }
     Matrix src(srcMat.rows, srcMat.cols), 
            expDst(expDstMat.rows, expDstMat.cols),
            dst(src.rows(), src.cols());
@@ -101,7 +109,15 @@ TEST_P(FiltersTest, filter2d_on_correct_mat)
 
     Mat srcMat, expDstMat, kernelMat;
     srcMat = imread(input, CV_LOAD_IMAGE_GRAYSCALE);
+    if (srcMat.empty())
+    {
+        FAIL() << "Can't read" + input + " image";
+    }
     expDstMat = imread(expOutput, CV_LOAD_IMAGE_GRAYSCALE);
+    if (expDstMat.empty())
+    {
+        FAIL() << "Can't read" + expOutput + " image";
+    }
     
     Matrix src(srcMat.rows, srcMat.cols), 
            expDst(expDstMat.rows, expDstMat.cols),
@@ -134,7 +150,15 @@ TEST_P(FiltersTest, median_on_correct_mat)
 
     Mat srcMat, expDstMat;
     srcMat = imread(input, CV_LOAD_IMAGE_GRAYSCALE);
+    if (srcMat.empty())
+    {
+        FAIL() << "Can't read" + input + " image";
+    }
     expDstMat = imread(expOutput, CV_LOAD_IMAGE_GRAYSCALE);
+    if (expDstMat.empty())
+    {
+        FAIL() << "Can't read" + expOutput + " image";
+    }
     
     Matrix src(srcMat.rows, srcMat.cols), 
            expDst(expDstMat.rows, expDstMat.cols),
@@ -144,6 +168,57 @@ TEST_P(FiltersTest, median_on_correct_mat)
     cvMat2matrix(expDstMat, expDst);
 
     filters->median(src, dst);
+
+    EXPECT_EQ(expDst, dst);
+}
+
+TEST_P(FiltersTest, SobelOx_on_zero_mat)
+{
+    Matrix src(5, 5), dst(5, 5), dstExp(5, 5);
+    src.Zeros();
+    dstExp.Zeros();
+
+    filters->SobelOx(src, dst);
+
+    EXPECT_EQ(dstExp, dst);
+}
+
+TEST_P(FiltersTest, SobelOx_on_ones_mat)
+{
+    Matrix src(4, 4), dst(4, 4), dstExp(4, 4);
+    src.Ones();
+    dstExp.Zeros();
+
+    filters->SobelOx(src, dst);
+
+    EXPECT_EQ(dstExp, dst);
+}
+
+TEST_P(FiltersTest, sobel_ox_on_correct_mat)
+{
+    const std::string input = "./testdata/image.png";
+    const std::string expOutput = "./testdata/image_sobel_ox.png";
+
+    Mat srcMat, expDstMat;
+    srcMat = imread(input, CV_LOAD_IMAGE_GRAYSCALE);
+    if (srcMat.empty())
+    {
+        FAIL() << "Can't read" + input + " image";
+    }
+    expDstMat = imread(expOutput, CV_LOAD_IMAGE_GRAYSCALE);
+    if (expDstMat.empty())
+    {
+        FAIL() << "Can't read" + expOutput + " image";
+    }
+    
+    Matrix src(srcMat.rows, srcMat.cols), 
+           expDst(expDstMat.rows, expDstMat.cols),
+           dst(src.rows(), src.cols());
+
+    cvMat2matrix(srcMat, src);
+    cvMat2matrix(expDstMat, expDst);
+
+    filters->SobelOx(src, dst);
 
     EXPECT_EQ(expDst, dst);
 }

@@ -37,6 +37,14 @@ class FiltersOpenCV : public Filters
         cvMat2matrix(dstMat, dst);
     }
 
+    virtual void SobelOx(const Matrix &src, Matrix &dst)
+    {
+        Mat srcMat, dstMat;
+        matrix2cvMat(src, srcMat);
+        cv::Sobel(srcMat, dstMat, -1, 1, 0);
+        cvMat2matrix(dstMat, dst);
+    }
+
 private:
     friend void matrix2cvMat(const Matrix &src, Mat &dst);
 

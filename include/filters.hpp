@@ -13,6 +13,8 @@ class Filters
     
     virtual void median(const Matrix &src, Matrix &dst, 
         const int kSize = 3) = 0;
+
+    virtual void SobelOx(const Matrix &src, Matrix &dst) = 0;
 };
 
 enum FILTERS_IMPLEMENTATIONS {
