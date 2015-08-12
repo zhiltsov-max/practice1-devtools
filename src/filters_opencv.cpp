@@ -28,6 +28,15 @@ class FiltersOpenCV : public Filters
         cvMat2matrix(dstMat, dst);
     }
 
+    virtual void median(const Matrix &src, Matrix &dst, 
+        const int kSize = 3)
+    {
+        Mat srcMat, dstMat;
+        matrix2cvMat(src, srcMat);
+        cv::medianBlur(srcMat, dstMat, kSize);
+        cvMat2matrix(dstMat, dst);
+    }
+
 private:
     friend void matrix2cvMat(const Matrix &src, Mat &dst);
 

@@ -49,8 +49,8 @@ TEST_P(FiltersTest, box_filter_on_ones_mat)
 
 TEST_P(FiltersTest, box_filter_on_correct_mat)
 {
-    std::string input = "./testdata/image.png";
-    std::string expOutput = "./testdata/image_box_filter.png";
+    const std::string input = "./testdata/image.png";
+    const std::string expOutput = "./testdata/image_box_filter.png";
 
     Mat srcMat, expDstMat;
     srcMat = imread(input, CV_LOAD_IMAGE_GRAYSCALE);
@@ -95,8 +95,9 @@ TEST_P(FiltersTest, filter2d_on_ones_mat)
 
 TEST_P(FiltersTest, filter2d_on_correct_mat)
 {
-    std::string input = "./testdata/image.png";
-    std::string expOutput = "./testdata/image_filter2d.png";
+    const std::string input = "./testdata/image.png";
+    const std::string expOutput = "./testdata/image_filter2d.png";
+    const int kSize = 3;
 
     Mat srcMat, expDstMat, kernelMat;
     srcMat = imread(input, CV_LOAD_IMAGE_GRAYSCALE);
@@ -104,13 +105,45 @@ TEST_P(FiltersTest, filter2d_on_correct_mat)
     
     Matrix src(srcMat.rows, srcMat.cols), 
            expDst(expDstMat.rows, expDstMat.cols),
-           dst(src.rows(), src.cols()), kernel(3, 3);
+           dst(src.rows(), src.cols()), kernel(kSize, kSize);
     kernel.Ones();
 
     cvMat2matrix(srcMat, src);
     cvMat2matrix(expDstMat, expDst);
 
     filters->filter2d(src, dst, kernel);
+
+    EXPECT_EQ(expDst, dst);
+}
+
+TEST_P(FiltersTest, median_on_zero_mat)
+{
+    Matrix src(5, 5), dst(5, 5), dstExp(5, 5);
+    src.Zeros();
+    dstExp.Zeros();
+
+    filters->median(src, dst);
+
+    EXPECT_EQ(dstExp, dst);
+}
+
+TEST_P(FiltersTest, median_on_correct_mat)
+{
+    const std::string input = "./testdata/image.png";
+    const std::string expOutput = "./testdata/image_median_3.png";
+
+    Mat srcMat, expDstMat;
+    srcMat = imread(input, CV_LOAD_IMAGE_GRAYSCALE);
+    expDstMat = imread(expOutput, CV_LOAD_IMAGE_GRAYSCALE);
+    
+    Matrix src(srcMat.rows, srcMat.cols), 
+           expDst(expDstMat.rows, expDstMat.cols),
+           dst(src.rows(), src.cols());
+
+    cvMat2matrix(srcMat, src);
+    cvMat2matrix(expDstMat, expDst);
+
+    filters->median(src, dst);
 
     EXPECT_EQ(expDst, dst);
 }
