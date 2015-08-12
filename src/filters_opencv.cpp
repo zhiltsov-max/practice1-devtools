@@ -4,6 +4,9 @@
 
 using namespace cv;
 
+void matrix2cvMat(const Matrix &src, Mat &dst);
+void cvMat2matrix(const Mat &src, Matrix &dst);
+
 class FiltersOpenCV : public Filters
 {
  public:
