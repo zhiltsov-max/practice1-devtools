@@ -25,38 +25,42 @@ class FiltersOpenCV : public Filters
     }
 
 private:
-    void matrix2cvMat(const Matrix &src, Mat &dst)
-    {
-        dst.create(src.rows(), src.cols(), CV_8UC1);
-        uchar *p;
-        for (int i = 0; i < src.rows(); i++)
-        {
-            p = dst.ptr<uchar>(i);
-            for (int j = 0; j < src.cols(); j++)
-            {
-                p[j] = src[i][j];
-            }
-        }
-    }
+    friend void matrix2cvMat(const Matrix &src, Mat &dst);
 
-    void cvMat2matrix(const Mat &src, Matrix &dst)
+    friend void cvMat2matrix(const Mat &src, Matrix &dst);    
+};
+
+void matrix2cvMat(const Matrix &src, Mat &dst)
+{
+    dst.create(src.rows(), src.cols(), CV_8UC1);
+    uchar *p;
+    for (int i = 0; i < src.rows(); i++)
     {
-        if (dst.data() == 0 || 
-            src.rows != dst.rows() || src.cols != dst.cols())
+        p = dst.ptr<uchar>(i);
+        for (int j = 0; j < src.cols(); j++)
         {
-            return;
-        }
-        const uchar *p;
-        for (int i = 0; i < src.rows; i++)
-        {
-            p = src.ptr<uchar>(i);
-            for (int j = 0; j < src.cols; j++)
-            {
-                dst[i][j] = p[j];
-            }
+            p[j] = src[i][j];
         }
     }
-};
+}
+
+void cvMat2matrix(const Mat &src, Matrix &dst)
+{
+    if (dst.data() == 0 || 
+        src.rows != dst.rows() || src.cols != dst.cols())
+    {
+        return;
+    }
+    const uchar *p;
+    for (int i = 0; i < src.rows; i++)
+    {
+        p = src.ptr<uchar>(i);
+        for (int j = 0; j < src.cols; j++)
+        {
+            dst[i][j] = p[j];
+        }
+    }
+}
 
 Filters* createFiltersOpenCV()
 {

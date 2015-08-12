@@ -1,6 +1,14 @@
 #include "filters.hpp"
 
 #include <gtest/gtest.h>
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+
+using namespace cv;
+
+void cvMat2matrix(const Mat &src, Matrix &dst);
+void matrix2cvMat(const Matrix &src, Mat &dst);
 
 class FiltersTest : public ::testing::TestWithParam<int>
 {
@@ -26,6 +34,36 @@ TEST_P(FiltersTest, box_filter_on_zero_mat)
     filters->boxFilter(src, dst);
 
     EXPECT_EQ(dstExp, dst);
+}
+
+TEST_P(FiltersTest, box_filter_on_ones_mat)
+{
+    Matrix src(4, 4), dst(4, 4), expDst(4, 4);
+    src.Ones();
+    expDst.Ones();
+
+    filters->boxFilter(src, dst);
+
+    EXPECT_EQ(expDst, dst);
+}
+
+TEST_P(FiltersTest, box_filter_on_correct_mat)
+{
+    std::string input = "./testdata/image.png";
+    std::string expOutput = "./testdata/image_box_filter.png";
+
+    Mat srcMat, expDstMat;
+    srcMat = imread(input, CV_LOAD_IMAGE_GRAYSCALE);
+    expDstMat = imread(expOutput, CV_LOAD_IMAGE_GRAYSCALE);
+    Matrix src(srcMat.rows, srcMat.cols), 
+           expDst(expDstMat.rows, expDstMat.cols),
+           dst(src.rows(), src.cols());
+    cvMat2matrix(srcMat, src);
+    cvMat2matrix(expDstMat, expDst);
+
+    filters->boxFilter(src, dst);
+
+    EXPECT_EQ(expDst, dst);
 }
 
 TEST_P(FiltersTest, filter2d_on_zero_mat)
