@@ -23,7 +23,8 @@ class FiltersOpenCV : public Filters
         Mat srcMat, dstMat, kernelMat;
         matrix2cvMat(src, srcMat);
         matrix2cvMat(kernel, kernelMat);
-        cv::filter2D(srcMat, dstMat, -1, kernelMat);
+        cv::filter2D(srcMat, dstMat, -1, kernelMat, 
+            Point(-1, -1), 0.0, BORDER_CONSTANT);
         cvMat2matrix(dstMat, dst);
     }
 

@@ -78,6 +78,43 @@ TEST_P(FiltersTest, filter2d_on_zero_mat)
     EXPECT_EQ(src, dst);
 }
 
+TEST_P(FiltersTest, filter2d_on_ones_mat)
+{
+    Matrix src(4, 4), dst(4, 4), kernel(3, 3), dstExp(4, 4);
+    src.Ones();
+    kernel.Ones();
+    dstExp[1][1] = dstExp[1][2] = dstExp[2][1] = dstExp[2][2] = 9;
+    dstExp[0][0] = dstExp[0][3] = dstExp[3][0] = dstExp[3][3] = 4;
+    dstExp[0][1] = dstExp[0][2] = dstExp[3][1] = dstExp[3][2] = 6;
+    dstExp[1][0] = dstExp[2][0] = dstExp[1][3] = dstExp[2][3] = 6;
+
+    filters->filter2d(src, dst, kernel);
+
+    EXPECT_EQ(dstExp, dst);
+}
+
+TEST_P(FiltersTest, filter2d_on_correct_mat)
+{
+    std::string input = "./testdata/image.png";
+    std::string expOutput = "./testdata/image_filter2d.png";
+
+    Mat srcMat, expDstMat, kernelMat;
+    srcMat = imread(input, CV_LOAD_IMAGE_GRAYSCALE);
+    expDstMat = imread(expOutput, CV_LOAD_IMAGE_GRAYSCALE);
+    
+    Matrix src(srcMat.rows, srcMat.cols), 
+           expDst(expDstMat.rows, expDstMat.cols),
+           dst(src.rows(), src.cols()), kernel(3, 3);
+    kernel.Ones();
+
+    cvMat2matrix(srcMat, src);
+    cvMat2matrix(expDstMat, expDst);
+
+    filters->filter2d(src, dst, kernel);
+
+    EXPECT_EQ(expDst, dst);
+}
+
 INSTANTIATE_TEST_CASE_P(Instance,
                         FiltersTest,
                         ::testing::Range<int>((int)OPENCV, (int)NUM_IMPLS));
