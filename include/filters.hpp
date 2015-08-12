@@ -5,8 +5,16 @@
 class Filters
 {
  public:
-    virtual void box(const Matrix &src, Matrix& dst) = 0;
-    virtual void filter2d(const Matrix &src, Matrix& dst, const Matrix &kernel) = 0;
+    virtual void boxFilter(const Matrix &src, Matrix &dst, 
+        const int kSize = 3) = 0;
+    
+    virtual void filter2d(const Matrix &src, Matrix &dst, 
+        const Matrix &kernel) = 0;
+    
+    virtual void median(const Matrix &src, Matrix &dst, 
+        const int kSize = 3) = 0;
+
+    virtual void SobelOx(const Matrix &src, Matrix &dst) = 0;
 };
 
 enum FILTERS_IMPLEMENTATIONS {

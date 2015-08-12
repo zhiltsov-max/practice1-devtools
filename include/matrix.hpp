@@ -11,8 +11,9 @@ class Matrix
     Matrix(const Matrix& m);
     ~Matrix();
 
-    int rows() { return kRows; }
-    int cols() { return kCols; }
+    int rows() const { return kRows; }
+    int cols() const { return kCols; }
+    uchar** data() const { return values; }
     bool operator==(const Matrix& m) const;
     uchar* operator[](int i) const { return values[i]; }
 
