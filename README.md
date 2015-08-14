@@ -333,10 +333,11 @@ Microsoft Visual Studio. Далее для определенности выпо
      opencv_imgproc2411d.dll is missing from your computer. Try reinstalling
      the program to fix this problem.`. Решение 1: скопировать 
      соответствующую библиотеку из `C:\openCV-2.4.11\opencv\build\x64\vcX\bin`
-     (vcX - версия Visual Studio, принимает значения vc10, vc11, vc12)
+     (`vcX` - версия Visual Studio, принимает значения `vc10`, `vc11`, `vc12`)
      к бинарным файлам проекта. Потребуется три таких библиотеки 
      `opencv_core2411d.dll`, `opencv_highgui2411d.dll`, `opencv_imgproc2411d.dll`.
      Решение 2: добавить путь `C:\openCV-2.4.11\opencv\build\x64\vcX\bin`
+     (не забудьте заменить `vcX` на правильную версию Visual Studio)
      в переменную окружения `PATH`.
   8. По аналогии следует запустить тесты. В результате прохождения тестов
      появится список тестов и статус подобно тому, что показан ниже.
