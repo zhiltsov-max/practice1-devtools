@@ -91,18 +91,52 @@ __Дополнительные задачи__:
   $ git clone https://github.com/github-account/practice1-devtools
   ```
 
-  4. Настроить адрес upstream-репозитория (потребуется при обновлении локальной 
+  4. Перейти в директорию practice1-devtools:
+
+  ```
+  $ cd ./practice1-devtools
+  ```
+
+  5. Настроить адрес upstream-репозитория (потребуется при обновлении локальной 
      версии репозитория):
 
   ```
   $ git remote add upstream https://github.com/Itseez-NNSU-SummerSchool2015/practice1-devtools
   ```
 
-  5. Настроить имя пользователя, из под которого будут выполняться все операции
+  6. Настроить имя пользователя, из под которого будут выполняться все операции
      с репозиторием Git:
 
   ```
   $ git config --global user.name "github-account"
+  ```
+
+  Примечание: если не выполнить указанную операцию при попытке размещения изменений
+  на сервер потребуется вводить ваш `gihub-account` (появится сообщение, приведенное ниже).
+  ```
+  warning: push.default is unset; its implicit value is changing in
+  Git 2.0 from 'matching' to 'simple'. To squelch this message
+  and maintain the current behavior after the default changes, use:
+
+    git config --global push.default matching
+
+  To squelch this message and adopt the new behavior now, use:
+
+    git config --global push.default simple
+
+  When push.default is set to 'matching', git will push local branches
+  to the remote branches that already exist with the same name.
+
+  In Git 2.0, Git will default to the more conservative 'simple'
+  behavior, which only pushes the current branch to the corresponding
+  remote branch that 'git pull' uses to update the current branch.
+
+  See 'git help config' and search for 'push.default' for further information.
+  (the 'simple' mode was introduced in Git 1.7.11. Use the similar mode
+  'current' instead of 'simple' if you sometimes use older versions of Git)
+
+  Username for 'https://github.com': github-account
+  Password for 'https://github-account@github.com':
   ```
 
 Когда сделан форк репозитория у вас создается по умолчанию единственная ветка 
@@ -227,6 +261,12 @@ Microsoft Visual Studio. Далее для определенности выпо
   1. Рядом с директорией `practice1-devtools` создайте
      `practice1-devtools-build`. В новой директории будут размещены файлы
      решения и проектов, сгенерированные с помощью CMake.
+
+     ```
+     $ cd ..
+     $ mkdir practice1-devtools-build
+     ```
+
   2. Перейдите в директорию `practice1-devtools-build`:
 
      ```
@@ -246,15 +286,107 @@ Microsoft Visual Studio. Далее для определенности выпо
     (если в командной строке набрать cmake без параметров, то можно просмотреть
     список доступных генераторов)
   # <path-to-practice1-devtools> - путь до директории
-    practice1-devtools, где лежат исходные коды проекта
+    practice1-devtools, где лежат исходные коды проекта (если предыдущие действия
+    выполнены корректно, то это директория`../practice1-devtools`)
+  ```
+
+  Примечание: после запуска утилиты CMake на экране появятся сообщения, приведенные
+  ниже.
+
+  ```
+  -- The C compiler identification is MSVC 16.0.30319.1
+  -- The CXX compiler identification is MSVC 16.0.30319.1
+  -- Check for working C compiler using: Visual Studio 10 Win64
+  -- Check for working C compiler using: Visual Studio 10 Win64 -- works
+  -- Detecting C compiler ABI info
+  -- Detecting C compiler ABI info - done
+  -- Check for working CXX compiler using: Visual Studio 10 Win64
+  -- Check for working CXX compiler using: Visual Studio 10 Win64 -- works
+  -- Detecting CXX compiler ABI info
+  -- Detecting CXX compiler ABI info - done
+  -- OpenCV ARCH: x64
+  -- OpenCV RUNTIME: vc10
+  -- OpenCV STATIC: OFF
+  -- Found OpenCV 2.4.11 in c:/OpenCV-2.4.11/opencv/build/x64/vc10/lib
+  -- You might need to add c:\OpenCV-2.4.11\opencv\build\x64\vc10\bin to your PATH to be able to run your applications.
+  --
+  -- General configuration for practice1
+  -- ======================================
+  --
+  --    Configuration:        Release
+  --    OpenCV build path:    c:\OpenCV-2.4.11\opencv\build
+  --
+  -- Configuring done
+  -- Generating done
+  -- Build files have been written to: C:/Users/ss2015/Documents/GitHub/practice1-devtools
   ```
 
   4. Откройте сгенерированный файл решения `practice1.sln`.
-
   5. Нажмите правой кнопкой мыши по проекту `ALL_BUILD` и выберите пункт
      `Rebuild` контекстного меню, чтобы собрать решение. В результате все
      бинарные файлы будут размещены в директории
      `practice1-devtools-build/bin`.
+  6. Для запуска приложения и тестов откройте командную строку (`cmd.exe` в `Пуск`)
+     и перейдите в директорию с бинарными файлами, используя команду `cd`.
+  7. Можно запустить приложение с примером использования матриц. Возможное сообщение 
+     при запуске: `The program can't start because
+     opencv_imgproc2411d.dll is missing from your computer. Try reinstalling
+     the program to fix this problem.`. Решение 1: скопировать 
+     соответствующую библиотеку из `C:\openCV-2.4.11\opencv\build\x64\vcX\bin`
+     (`vcX` - версия Visual Studio, принимает значения `vc10`, `vc11`, `vc12`)
+     к бинарным файлам проекта. Потребуется три таких библиотеки 
+     `opencv_core2411d.dll`, `opencv_highgui2411d.dll`, `opencv_imgproc2411d.dll`.
+     Решение 2: добавить путь `C:\openCV-2.4.11\opencv\build\x64\vcX\bin`
+     (не забудьте заменить `vcX` на правильную версию Visual Studio)
+     в переменную окружения `PATH`.
+  8. По аналогии следует запустить тесты. В результате прохождения тестов
+     появится список тестов и статус подобно тому, что показан ниже.
+
+  ```
+  [==========] Running 16 tests from 2 test cases.
+  [----------] Global test environment set-up.
+  [----------] 5 tests from Matrix
+  [ RUN      ] Matrix.matrix_can_set_zeros
+  [       OK ] Matrix.matrix_can_set_zeros (0 ms)
+  [ RUN      ] Matrix.matrix_can_set_ones
+  [       OK ] Matrix.matrix_can_set_ones (0 ms)
+  [ RUN      ] Matrix.comparator_returns_true_on_equal_matrices
+  [       OK ] Matrix.comparator_returns_true_on_equal_matrices (0 ms)
+  [ RUN      ] Matrix.comparator_returns_false_on_non_equal_matrices
+  [       OK ] Matrix.comparator_returns_false_on_non_equal_matrices (0 ms)
+  [ RUN      ] Matrix.copy_ctor_works
+  [       OK ] Matrix.copy_ctor_works (1 ms)
+  [----------] 5 tests from Matrix (4 ms total)
+
+  [----------] 11 tests from Instance/FiltersTest
+  [ RUN      ] Instance/FiltersTest.box_filter_on_zero_mat/0
+  [       OK ] Instance/FiltersTest.box_filter_on_zero_mat/0 (0 ms)
+  [ RUN      ] Instance/FiltersTest.box_filter_on_ones_mat/0
+  [       OK ] Instance/FiltersTest.box_filter_on_ones_mat/0 (0 ms)
+  [ RUN      ] Instance/FiltersTest.box_filter_on_correct_mat/0
+  [       OK ] Instance/FiltersTest.box_filter_on_correct_mat/0 (26 ms)
+  [ RUN      ] Instance/FiltersTest.filter2d_on_zero_mat/0
+  [       OK ] Instance/FiltersTest.filter2d_on_zero_mat/0 (0 ms)
+  [ RUN      ] Instance/FiltersTest.filter2d_on_ones_mat/0
+  [       OK ] Instance/FiltersTest.filter2d_on_ones_mat/0 (0 ms)
+  [ RUN      ] Instance/FiltersTest.filter2d_on_correct_mat/0
+  [       OK ] Instance/FiltersTest.filter2d_on_correct_mat/0 (23 ms)
+  [ RUN      ] Instance/FiltersTest.median_on_zero_mat/0
+  [       OK ] Instance/FiltersTest.median_on_zero_mat/0 (0 ms)
+  [ RUN      ] Instance/FiltersTest.median_on_correct_mat/0
+  [       OK ] Instance/FiltersTest.median_on_correct_mat/0 (25 ms)
+  [ RUN      ] Instance/FiltersTest.SobelOx_on_zero_mat/0
+  [       OK ] Instance/FiltersTest.SobelOx_on_zero_mat/0 (0 ms)
+  [ RUN      ] Instance/FiltersTest.SobelOx_on_ones_mat/0
+  [       OK ] Instance/FiltersTest.SobelOx_on_ones_mat/0 (0 ms)
+  [ RUN      ] Instance/FiltersTest.sobel_ox_on_correct_mat/0
+  [       OK ] Instance/FiltersTest.sobel_ox_on_correct_mat/0 (30 ms)
+  [----------] 11 tests from Instance/FiltersTest (112 ms total)
+
+  [----------] Global test environment tear-down
+  [==========] 16 tests from 2 test cases ran. (120 ms total)
+  [  PASSED  ] 16 tests.
+  ```
 
 __Примечание:__ генератор проекта должен совпадать с версией Visual Studio, которая
 использовалась при сборке OpenCV. В пакете OpenCV доступны библиотеки, собранные
@@ -299,8 +431,8 @@ __Примечание:__ генератор проекта должен сов�
         соответствующий ярлык на рабочем столе или в меню "Пуск".
      2. Воспользоваться перечнем инструкций, описанных в разделе
         [Общие инструкции по работе с Git](https://github.com/Itseez-NNSU-SummerSchool2015/practice1-devtools#Общие-инструкции-по-работе-с-git)).
-  3. Собрать проект и проверить его работоспособность, запустив тесты и пример
-     1. Воспользоваться инструкцией по сборке, описанной в разделе 
+  3. Собрать проект и проверить его работоспособность, запустив тесты и пример.
+     1. Воспользоваться инструкцией по сборке и запуску, описанной в разделе 
         [Сборка проекта с помощью CMake и MS VS](https://github.com/Itseez-NNSU-SummerSchool2015/practice1-devtools#Сборка-проекта-с-помощью-cmake-и-microsoft-visual-studio)).
      2. Чтобы проверить работоспособность тестов, достаточно запустить
         `practice1_test.exe` и `matrix_sample.exe`. Если все тесты "зеленые", 
