@@ -286,7 +286,39 @@ Microsoft Visual Studio. Далее для определенности выпо
     (если в командной строке набрать cmake без параметров, то можно просмотреть
     список доступных генераторов)
   # <path-to-practice1-devtools> - путь до директории
-    practice1-devtools, где лежат исходные коды проекта
+    practice1-devtools, где лежат исходные коды проекта (если предыдущие действия
+    выполнены корректно, то это директория`../practice1-devtools`)
+  ```
+
+  Примечание: после запуска утилиты CMake на экране появятся сообщения, приведенные
+  ниже.
+
+  ```
+  -- The C compiler identification is MSVC 16.0.30319.1
+  -- The CXX compiler identification is MSVC 16.0.30319.1
+  -- Check for working C compiler using: Visual Studio 10 Win64
+  -- Check for working C compiler using: Visual Studio 10 Win64 -- works
+  -- Detecting C compiler ABI info
+  -- Detecting C compiler ABI info - done
+  -- Check for working CXX compiler using: Visual Studio 10 Win64
+  -- Check for working CXX compiler using: Visual Studio 10 Win64 -- works
+  -- Detecting CXX compiler ABI info
+  -- Detecting CXX compiler ABI info - done
+  -- OpenCV ARCH: x64
+  -- OpenCV RUNTIME: vc10
+  -- OpenCV STATIC: OFF
+  -- Found OpenCV 2.4.11 in c:/OpenCV-2.4.11/opencv/build/x64/vc10/lib
+  -- You might need to add c:\OpenCV-2.4.11\opencv\build\x64\vc10\bin to your PATH to be able to run your applications.
+  --
+  -- General configuration for practice1
+  -- ======================================
+  --
+  --    Configuration:        Release
+  --    OpenCV build path:    c:\OpenCV-2.4.11\opencv\build
+  --
+  -- Configuring done
+  -- Generating done
+  -- Build files have been written to: C:/Users/ss2015/Documents/GitHub/practice1-devtools
   ```
 
   4. Откройте сгенерированный файл решения `practice1.sln`.
