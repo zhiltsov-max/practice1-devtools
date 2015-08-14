@@ -1,4 +1,5 @@
 #include "filters.hpp"
+
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
@@ -23,12 +24,12 @@ class FiltersOpenCV : public Filters
         Mat srcMat, dstMat, kernelMat;
         matrix2cvMat(src, srcMat);
         matrix2cvMat(kernel, kernelMat);
-        cv::filter2D(srcMat, dstMat, -1, kernelMat, 
+        cv::filter2D(srcMat, dstMat, -1, kernelMat,
             Point(-1, -1), 0.0, BORDER_CONSTANT);
         cvMat2matrix(dstMat, dst);
     }
 
-    virtual void median(const Matrix &src, Matrix &dst, 
+    virtual void median(const Matrix &src, Matrix &dst,
         const int kSize = 3)
     {
         Mat srcMat, dstMat;
@@ -47,8 +48,7 @@ class FiltersOpenCV : public Filters
 
 private:
     friend void matrix2cvMat(const Matrix &src, Mat &dst);
-
-    friend void cvMat2matrix(const Mat &src, Matrix &dst);    
+    friend void cvMat2matrix(const Mat &src, Matrix &dst);
 };
 
 void matrix2cvMat(const Matrix &src, Mat &dst)
@@ -67,7 +67,7 @@ void matrix2cvMat(const Matrix &src, Mat &dst)
 
 void cvMat2matrix(const Mat &src, Matrix &dst)
 {
-    if (dst.data() == 0 || 
+    if (dst.data() == 0 ||
         src.rows != dst.rows() || src.cols != dst.cols())
     {
         return;
