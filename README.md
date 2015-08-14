@@ -261,6 +261,12 @@ Microsoft Visual Studio. Далее для определенности выпо
   1. Рядом с директорией `practice1-devtools` создайте
      `practice1-devtools-build`. В новой директории будут размещены файлы
      решения и проектов, сгенерированные с помощью CMake.
+
+     ```
+     $ cd ..
+     $ mkdir practice1-devtools-build
+     ```
+
   2. Перейдите в директорию `practice1-devtools-build`:
 
      ```
