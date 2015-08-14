@@ -322,11 +322,70 @@ Microsoft Visual Studio. Далее для определенности выпо
   ```
 
   4. Откройте сгенерированный файл решения `practice1.sln`.
-
   5. Нажмите правой кнопкой мыши по проекту `ALL_BUILD` и выберите пункт
      `Rebuild` контекстного меню, чтобы собрать решение. В результате все
      бинарные файлы будут размещены в директории
      `practice1-devtools-build/bin`.
+  6. Для запуска приложения и тестов откройте командную строку (`cmd.exe` в `Пуск`)
+     и перейдите в директорию с бинарными файлами, используя команду `cd`.
+  7. Можно запустить приложение с примером использования матриц. Возможное сообщение 
+     при запуске: `The program can't start because
+     opencv_imgproc2411d.dll is missing from your computer. Try reinstalling
+     the program to fix this problem.`. Решение 1: скопировать 
+     соответствующую библиотеку из `C:\openCV-2.4.11\opencv\build\x64\vcX\bin`
+     (vcX - версия Visual Studio, принимает значения vc10, vc11, vc12)
+     к бинарным файлам проекта. Потребуется три таких библиотеки 
+     `opencv_core2411d.dll`, `opencv_highgui2411d.dll`, `opencv_imgproc2411d.dll`.
+     Решение 2: добавить путь `C:\openCV-2.4.11\opencv\build\x64\vcX\bin`
+     в переменную окружения `PATH`.
+  8. По аналогии следует запустить тесты. В результате прохождения тестов
+     появится список тестов и статус подобно тому, что показан ниже.
+
+  ```
+  [==========] Running 16 tests from 2 test cases.
+  [----------] Global test environment set-up.
+  [----------] 5 tests from Matrix
+  [ RUN      ] Matrix.matrix_can_set_zeros
+  [       OK ] Matrix.matrix_can_set_zeros (0 ms)
+  [ RUN      ] Matrix.matrix_can_set_ones
+  [       OK ] Matrix.matrix_can_set_ones (0 ms)
+  [ RUN      ] Matrix.comparator_returns_true_on_equal_matrices
+  [       OK ] Matrix.comparator_returns_true_on_equal_matrices (0 ms)
+  [ RUN      ] Matrix.comparator_returns_false_on_non_equal_matrices
+  [       OK ] Matrix.comparator_returns_false_on_non_equal_matrices (0 ms)
+  [ RUN      ] Matrix.copy_ctor_works
+  [       OK ] Matrix.copy_ctor_works (1 ms)
+  [----------] 5 tests from Matrix (4 ms total)
+
+  [----------] 11 tests from Instance/FiltersTest
+  [ RUN      ] Instance/FiltersTest.box_filter_on_zero_mat/0
+  [       OK ] Instance/FiltersTest.box_filter_on_zero_mat/0 (0 ms)
+  [ RUN      ] Instance/FiltersTest.box_filter_on_ones_mat/0
+  [       OK ] Instance/FiltersTest.box_filter_on_ones_mat/0 (0 ms)
+  [ RUN      ] Instance/FiltersTest.box_filter_on_correct_mat/0
+  [       OK ] Instance/FiltersTest.box_filter_on_correct_mat/0 (26 ms)
+  [ RUN      ] Instance/FiltersTest.filter2d_on_zero_mat/0
+  [       OK ] Instance/FiltersTest.filter2d_on_zero_mat/0 (0 ms)
+  [ RUN      ] Instance/FiltersTest.filter2d_on_ones_mat/0
+  [       OK ] Instance/FiltersTest.filter2d_on_ones_mat/0 (0 ms)
+  [ RUN      ] Instance/FiltersTest.filter2d_on_correct_mat/0
+  [       OK ] Instance/FiltersTest.filter2d_on_correct_mat/0 (23 ms)
+  [ RUN      ] Instance/FiltersTest.median_on_zero_mat/0
+  [       OK ] Instance/FiltersTest.median_on_zero_mat/0 (0 ms)
+  [ RUN      ] Instance/FiltersTest.median_on_correct_mat/0
+  [       OK ] Instance/FiltersTest.median_on_correct_mat/0 (25 ms)
+  [ RUN      ] Instance/FiltersTest.SobelOx_on_zero_mat/0
+  [       OK ] Instance/FiltersTest.SobelOx_on_zero_mat/0 (0 ms)
+  [ RUN      ] Instance/FiltersTest.SobelOx_on_ones_mat/0
+  [       OK ] Instance/FiltersTest.SobelOx_on_ones_mat/0 (0 ms)
+  [ RUN      ] Instance/FiltersTest.sobel_ox_on_correct_mat/0
+  [       OK ] Instance/FiltersTest.sobel_ox_on_correct_mat/0 (30 ms)
+  [----------] 11 tests from Instance/FiltersTest (112 ms total)
+
+  [----------] Global test environment tear-down
+  [==========] 16 tests from 2 test cases ran. (120 ms total)
+  [  PASSED  ] 16 tests.
+  ```
 
 __Примечание:__ генератор проекта должен совпадать с версией Visual Studio, которая
 использовалась при сборке OpenCV. В пакете OpenCV доступны библиотеки, собранные
