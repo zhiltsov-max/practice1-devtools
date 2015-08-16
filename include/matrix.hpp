@@ -15,6 +15,7 @@ class Matrix
     int cols() const;
     uchar** data() const;
     bool operator==(const Matrix& m) const;
+    Matrix& operator=(const Matrix& m);
     uchar* operator[](int i) const;
 
     // Initialization methods
@@ -25,6 +26,10 @@ class Matrix
     friend std::ostream& operator<<(std::ostream& os, const Matrix& m);
 
  private:
+     void alloc(int rows, int cols);
+     void free();
+     void copy(const Matrix& m);
+
     uchar** values;
     int kRows, kCols;
 };
