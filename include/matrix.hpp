@@ -25,8 +25,6 @@ class Matrix
     friend std::ostream& operator<<(std::ostream& os, const Matrix& m);
 
  private:
-    Matrix() {};
-
     uchar** values;
     int kRows, kCols;
 };
