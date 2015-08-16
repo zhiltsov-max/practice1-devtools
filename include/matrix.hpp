@@ -11,11 +11,12 @@ class Matrix
     Matrix(const Matrix& m);
     ~Matrix();
 
-    int rows() const { return kRows; }
-    int cols() const { return kCols; }
-    uchar** data() const { return values; }
+    int rows() const;
+    int cols() const;
+    uchar** data() const;
     bool operator==(const Matrix& m) const;
-    uchar* operator[](int i) const { return values[i]; }
+    Matrix& operator=(const Matrix& m);
+    uchar* operator[](int i) const;
 
     // Initialization methods
     void Zeros();
@@ -25,7 +26,9 @@ class Matrix
     friend std::ostream& operator<<(std::ostream& os, const Matrix& m);
 
  private:
-    Matrix() {};
+     void alloc(int rows, int cols);
+     void free();
+     void copy(const Matrix& m);
 
     uchar** values;
     int kRows, kCols;

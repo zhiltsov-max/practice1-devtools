@@ -56,3 +56,40 @@ TEST(Matrix, copy_ctor_works)
 
     EXPECT_EQ(m1, m2);
 }
+
+TEST(Matrix, can_assign_nonequal_matrices)
+{
+    Matrix m1(1, 1);
+    m1.Random(777);
+    Matrix m2(3, 3);
+    m2.Random(888);
+
+    m1 = m2;
+
+    EXPECT_EQ(m1, m2);
+}
+
+TEST(Matrix, can_assign_equal_matrices)
+{
+    Matrix m1(3, 3);
+    m1.Random(777);
+    Matrix m2(m1);
+
+    m1 = m2;
+
+    EXPECT_EQ(m1, m2);
+}
+
+TEST(Matrix, can_chain_assign_operators)
+{
+    Matrix m1(3, 3);
+    m1.Random(777);
+    Matrix m2(m1);
+    Matrix m3(7, 5);
+    m3.Zeros();
+
+    m1 = m2 = m3;
+
+    EXPECT_EQ(m3, m2);
+    EXPECT_EQ(m3, m1);
+}
