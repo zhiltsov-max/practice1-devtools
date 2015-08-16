@@ -11,11 +11,11 @@ class Matrix
     Matrix(const Matrix& m);
     ~Matrix();
 
-    int rows() const { return kRows; }
-    int cols() const { return kCols; }
-    uchar** data() const { return values; }
+    int rows() const;
+    int cols() const;
+    uchar** data() const;
     bool operator==(const Matrix& m) const;
-    uchar* operator[](int i) const { return values[i]; }
+    uchar* operator[](int i) const;
 
     // Initialization methods
     void Zeros();

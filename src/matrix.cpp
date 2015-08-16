@@ -31,6 +31,26 @@ Matrix::Matrix(const Matrix& m)
     }
 }
 
+int Matrix::rows() const
+{
+    return kRows;
+}
+
+int Matrix::cols() const
+{
+    return kCols;
+}
+
+uchar** Matrix::data() const
+{
+    return values;
+}
+
+uchar* Matrix::operator[](int i) const
+{
+    return values[i];
+}
+
 void Matrix::Zeros()
 {
     for (int i = 0; i < kRows; i++)
