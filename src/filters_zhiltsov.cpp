@@ -13,27 +13,71 @@ private:
 
 public:
 	virtual void boxFilter(const Matrix &src, Matrix& dst, const int kSize = 3) {
-		Matrix kernel(kSize, kSize);
-		Entry value = static_cast<Entry>(1 / (kSize * kSize));
-		for (auto i = 0; i != kSize; ++i) {
-			for (auto j = 0; j != kSize; ++j) {
-				kernel[i][j] = value;
+		assert(0 < kSize, "Kernel size have to be higher than 0.");
+		assert(kSize / 2 < std::min(src.rows(), src.cols()), "Kernel size is too big.");
+
+
+		double mid = 1.0 / (kSize * kSize);
+
+		for (int y = 0; y < src.rows(); ++y) {
+			for (int x = 0; x < src.cols(); ++x) {
+				double cell = 0.0;
+
+				for (int i = -kSize / 2, iend = kSize / 2; i < iend; ++i) {
+					for (int j = -kSize / 2, jend = kSize / 2; j < jend; ++j) {
+						int yPos = y + std::abs(i);
+						if (src.rows() < yPos) {
+							yPos = src.rows() - i;
+						}
+						int xPos = x + std::abs(j);
+						if (src.cols() < xPos) {
+							xPos = src.cols() - j;
+						}		
+						cell += src[yPos][xPos];
+					}
+				}
+				dst[y][x] = static_cast<Entry>(cell * mid);
 			}
 		}
-		linearFilter(kernel, src, dst);
 	}
 
 	virtual void filter2d(const Matrix &src, Matrix& dst, const Matrix &kernel) {
-		throw std::exception("Function in development.");
+		assert(kernel.rows() * kernel.cols() != 0, "Kernel size have to be higher than 0.");
+		assert(kSize / 2 < std::min(src.rows(), src.cols()), "Kernel size is too big.");
+
+
+		for (auto i = 0; i != source.rows(); ++i) {
+			for (auto j = 0; j != source.cols(); ++j) {
+				dest[i][j] = createEntryValue(source, i, j, kernel);
+			}
+		}		
 	}
 
 	virtual void median(const Matrix &src, Matrix &dst, const int kSize = 3) {
+		assert(0 < kSize, "Kernel size have to be higher than 0.");
+		assert(kSize / 2 < std::min(src.rows(), src.cols()), "Kernel size is too big.");
+
 		Matrix kernel(kSize, kSize);
 
-		for (auto x = 0; x < src.rows(); x += kSize) {
-			for (auto y = 0; y < src.cols(); y += kSize) {
+
+		for (int y = 0; y < src.rows(); ++y) {
+			for (int x = 0; x < src.cols(); ++x) {
 				createMedianKernel(src, x, y, kernel);
-				linearFilter(kernel, src, dst);
+
+				for (int i = -kSize / 2, iend = kSize / 2; i < iend; ++i) {
+					for (int j = -kSize / 2, jend = kSize / 2; j < jend; ++j) {
+						int yPos = y + std::abs(i);
+						if (src.rows() < yPos) {
+							yPos = src.rows() - i;
+						}
+						int xPos = x + std::abs(j);
+						if (src.cols() < xPos) {
+							xPos = src.cols() - j;
+						}
+						dst[y][x] = kernel[i][j];
+					}
+				}
+				
 			}
 		}
 	}
@@ -43,48 +87,45 @@ public:
 	}
 
 private:
-	void checkInput(const Matrix& kernel, const Matrix& source);
-	void linearFilter(const Matrix& kernel, const Matrix& source, Matrix& dest);
 	Entry createEntryValue(const Matrix& source, unsigned int x, unsigned int y, const Matrix& kernel);
 
 	void createMedianKernel(const Matrix& source, unsigned int x, unsigned int y, Matrix& kernel);
+
+	void getPos(const Matrix& src, int& xPos, int& yPos, int xCoord, int yCoord);
 };
 
-void FiltersZhiltsov::checkInput(const Matrix &kernel, const Matrix &src) {
-	if (kernel.cols() <= 0 || kernel.rows() <= 0) {
-		throw std::exception("Wrong kernel size.");
-	}
-}
-
-void FiltersZhiltsov::linearFilter(const Matrix &kernel, const Matrix &source, Matrix& dest) {
-	checkInput(kernel, source);
-	for (auto i = 0; i != source.rows(); ++i) {
-		for (auto j = 0; j != source.cols(); ++j) {
-			dest[i][j] = createEntryValue(source, i, j, kernel);
+FiltersZhiltsov::Entry FiltersZhiltsov::createEntryValue(const Matrix& source, unsigned int x, unsigned int y, const Matrix& kernel) {
+	unsigned int result = 0;	
+	for (int i = -kernel.rows() / 2, iend = kernel.rows() / 2; i < iend; ++i) {
+		for (int j = -kernel.cols() / 2, jend = kernel.cols() / 2; j < jend; ++j) {
+			int yPos = y + std::abs(i);
+			if (src.rows() < yPos) {
+				yPos = src.rows() - i;
+			}
+			int xPos = x + std::abs(j);
+			if (src.cols() < xPos) {
+				xPos = src.cols() - j;
+			}
+			result += src[yPos][xPos] * kernel[i][j];
 		}
 	}
-}
-
-FiltersZhiltsov::Entry FiltersZhiltsov::createEntryValue(const Matrix& source, unsigned int x, unsigned int y, const Matrix& kernel) {
-	Entry result = 0;	
-	for (auto i = 0; i != kernel.rows(); ++i) {
-		for (auto j = 0; j != kernel.cols(); ++j) {
-			if ((x + i < source.rows()) && (y + j < source.cols())) {
-				result += source[x + i][y + j] * kernel[i][j];
-			}
-		}	
-	}
-	return result;
+	return static_cast<Entry>(result);
 }
 
 void FiltersZhiltsov::createMedianKernel(const Matrix& source, unsigned int x, unsigned int y, Matrix& kernel) {
 	std::vector<Entry> values;
 	values.reserve(kernel.rows() * kernel.cols());
-	for (auto i = 0; i != kernel.rows(); ++i) {
-		for (auto j = 0; j != kernel.cols(); ++j) {
-			if ((x + i < source.rows()) || (y + j < source.cols())) {
-				values.push_back(source[x + i][y + j]);
+	for (int i = -kernel.rows() / 2, iend = kernel.rows() / 2; i < iend; ++i) {
+		for (int j = -kernel.cols() / 2, jend = kernel.cols() / 2; j < jend; ++j) {
+			int yPos = y + std::abs(i);
+			if (src.rows() < yPos) {
+				yPos = src.rows() - i;
 			}
+			int xPos = x + std::abs(j);
+			if (src.cols() < xPos) {
+				xPos = src.cols() - j;
+			}
+			values.push_back(source[yPos][xPos]);
 		}
 	}
 
